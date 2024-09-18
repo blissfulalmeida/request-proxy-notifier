@@ -10,7 +10,7 @@ class BetPlacementNotifier:
     async def send_async_request(self):
         async with httpx.AsyncClient() as client:
             try:
-                response = await client.get("https://api.telegram.org/bot7514011991:AAF-8dzHVIISowicdAF26zJJriImb3S8Ufg/sendMessage?chat_id=-1002292296247&text=123")
+                response = await client.get("https://api.telegram.org/bot7514011991:AAF-8dzHVIISowicdAF26zJJriImb3S8Ufg/sendMessage?chat_id=-1002292296247&text=Bet%20placed%20successfully")
 
                 logging.info(f"Response from bet365: {response.json()}")
 
