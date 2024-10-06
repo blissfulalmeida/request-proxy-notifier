@@ -3,7 +3,7 @@ import asyncio
 import httpx
 import subprocess
 import datetime
-import time
+import os
 
 class BetPlacementNotifier:
 
@@ -117,6 +117,17 @@ class BetPlacementNotifier:
         except Exception as e:
             logging.error(f"Error removing file {file_path}: {e}")
 
+# Main function for testing the response method
+async def main():
+    notifier = BetPlacementNotifier()
 
+    # Simulate a test by passing the "trigger" parameter
+    param = "trigger"  # You can change this to simulate different conditions
 
-addons = [BetPlacementNotifier()]
+    # Call the response method (await it since it's now async)
+    await notifier.response(param)
+
+# Run the main function
+if __name__ == "__main__":
+    # Use asyncio.run to ensure the event loop is running
+    asyncio.run(main())
