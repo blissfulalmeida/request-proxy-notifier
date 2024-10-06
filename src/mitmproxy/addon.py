@@ -4,6 +4,7 @@ import httpx
 import subprocess
 import datetime
 import time
+import uuid
 
 class BetPlacementNotifier:
 
@@ -21,7 +22,7 @@ class BetPlacementNotifier:
     async def response(self, flow):
         # Example check for request
         if 'httpbin' in flow.request.host and flow.request.method == "POST":
-            await self.generate_screenshot()  # Await the coroutine directly
+            asyncio.create_task(self.generate_screenshot())
 
     async def generate_screenshot(self):
 
@@ -63,13 +64,15 @@ class BetPlacementNotifier:
 
     async def send_to_telegram(self, file_paths, caption):
         # Open the file in binary mode
-        await self.send_message(f"\nStart sending screenshots\n")
+        batch_uuid = '#' + str(uuid.uuid4()).replace('-', '_')
 
         for index, file_path in enumerate(file_paths):
             with open(file_path, 'rb') as file:
                 url = f"https://api.telegram.org/bot{self.TELEGRAM_BOT_TOKEN}/sendPhoto"
+                batch_uuid += f"\n{index + 1}"
                 payload = {
                     'chat_id': self.CHAT_ID,
+                    'caption': batch_uuid
                 }
                 files = {
                     'photo': file
@@ -78,9 +81,7 @@ class BetPlacementNotifier:
                 async with httpx.AsyncClient() as client:
                     try:
                         response = await client.post(url, data=payload, files=files)
-
                         logging.info(f"Response from Telegram: {response.json()}")
-
                         if response.status_code == 200:
                             logging.info(f"Screenshots sent to Telegram successfully.")
 
@@ -88,26 +89,6 @@ class BetPlacementNotifier:
                         logging.error(f"Error sending screenshot: {e}")
 
         await self.remove_files(file_paths)
-
-    async def send_message(self, message):
-        # URL for sending a message via Telegram bot
-        url = f"https://api.telegram.org/bot{self.TELEGRAM_BOT_TOKEN}/sendMessage"
-        payload = {
-            'chat_id': self.CHAT_ID,
-            'text': message
-        }
-
-        async with httpx.AsyncClient() as client:
-            try:
-                response = await client.post(url, data=payload)
-
-                if response.status_code == 200:
-                    logging.info(f"Initial message sent to Telegram successfully.")
-                else:
-                    logging.error(f"Failed to send initial message. Status code: {response.status_code}")
-
-            except Exception as e:
-                logging.error(f"Error sending initial message: {e}")
 
     async def remove_files(self, file_paths):
        for file_path in file_paths:
