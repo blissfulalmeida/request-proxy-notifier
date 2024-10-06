@@ -5,6 +5,8 @@ import subprocess
 import datetime
 import time
 import uuid
+import os
+from utils import take_screenshot
 
 class BetPlacementNotifier:
 
@@ -29,50 +31,26 @@ class BetPlacementNotifier:
         screenshots = []
 
         for i in range(self.SCREENSHOT_COUNT):
-            # Generate a timestamped filename
-            timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            output_file = f"C:\\screenshot_{timestamp}_{i}.png"
+            output_file = await take_screenshot(i)  # Take a screenshot and get the output file path
             screenshots.append(output_file)
-
-            # PowerShell command to take a screenshot
-            powershell_command = f"""
-            param (
-                [string]$outputFile = "{output_file}"
-            )
-
-            Add-Type -AssemblyName System.Windows.Forms
-            $width = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Width
-            $height = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Height
-            $bmp = New-Object Drawing.Bitmap($width, $height)
-            $g = [Drawing.Graphics]::FromImage($bmp)
-            $g.CopyFromScreen(0, 0, 0, 0, $bmp.Size)
-            $g.Dispose()
-            $bmp.Save($outputFile)
-            $bmp.Dispose()
-            """
-
-            # Run the PowerShell command to take the screenshot
-            subprocess.run(["powershell", "-Command", powershell_command])
-
-            logging.info(f"Screenshot saved at: {output_file}")
 
             # Wait for 1 second before taking the next screenshot
             await asyncio.sleep(self.SCREENSHOT_DELAY)
 
         # Send the screenshot to Telegram
-        await self.send_to_telegram(screenshots, "Here are the 5 screenshots taken in sequence.")
+        await self.send_screenshots(screenshots)
 
-    async def send_to_telegram(self, file_paths, caption):
+    async def send_screenshots(self, file_paths):
         # Open the file in binary mode
         batch_uuid = '#' + str(uuid.uuid4()).replace('-', '_')
 
         for index, file_path in enumerate(file_paths):
             with open(file_path, 'rb') as file:
                 url = f"https://api.telegram.org/bot{self.TELEGRAM_BOT_TOKEN}/sendPhoto"
-                batch_uuid += f"\n{index + 1}"
+                tmp_batch_uuid = batch_uuid + f"\nImage {index + 1}"
                 payload = {
                     'chat_id': self.CHAT_ID,
-                    'caption': batch_uuid
+                    'caption': tmp_batch_uuid
                 }
                 files = {
                     'photo': file
@@ -81,7 +59,6 @@ class BetPlacementNotifier:
                 async with httpx.AsyncClient() as client:
                     try:
                         response = await client.post(url, data=payload, files=files)
-                        logging.info(f"Response from Telegram: {response.json()}")
                         if response.status_code == 200:
                             logging.info(f"Screenshots sent to Telegram successfully.")
 
