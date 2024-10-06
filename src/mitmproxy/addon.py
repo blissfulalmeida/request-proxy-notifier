@@ -18,7 +18,7 @@ class BetPlacementNotifier:
         self.num = 0
 
     # This method simulates the flow and triggers the screenshot based on the passed parameter
-    async def response(self, param):
+    async def response(self, flow):
         # Example check for request
         if 'httpbin' in flow.request.host and flow.request.method == "POST":
             await self.generate_screenshot()  # Await the coroutine directly
