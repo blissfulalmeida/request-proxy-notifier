@@ -17,8 +17,14 @@ pipx inject mitmproxy httpx
 scoop install git
 scoop install nodejs
 git clone https://github.com/blissfulalmeida/request-proxy-notifier.git
-C:\Users\Administrator\.local\bin\mitmdump.exe -s request-proxy-notifier/src/mitmproxy/addon.py
 
+4. Set TELEGRAM_BOT_TOKEN and CHAT_ID in copybot/request-proxy-notifier/src/mitmproxy/addon.py
+
+   TELEGRAM_BOT_TOKEN = ''
+   CHAT_ID = ''
+
+5. Run mitmdump 
+C:\Users\Administrator\.local\bin\mitmdump.exe -s request-proxy-notifier/src/mitmproxy/addon.py
 -----
 mitmdump.exe --mode upstream:http://gate.smartproxy.com:10015 --upstream-auth user-spvlqzff00-country-es-city-madrid:47M52piURbtigoiLj~ -p 8080 -s src/mitmproxy/addon.py`
 Or
