@@ -1,22 +1,14 @@
-# Set execution policy to allow script execution
+Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vs_BuildTools.exe" -OutFile "vs_BuildTools.exe"
+vs_BuildTools.exe --layout C:\BuildTools --lang en-US --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended
+Invoke-WebRequest -Uri "https://www.nirsoft.net/utils/nircmd.zip" -OutFile "nircmd.zip"
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+[System.IO.Compression.ZipFile]::ExtractToDirectory("nircmd.zip", "C:\Program Files\nircmd")
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
-
-# Install Scoop
 iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-
-# Install Python and Pipx
 scoop install python
 scoop install pipx
-
-# Ensure Pipx is in the PATH
 pipx ensurepath
-
-# Install mitmproxy and inject httpx
 pipx install mitmproxy
 pipx inject mitmproxy httpx
-
-# Install Git
 scoop install git
-
-# Clone the request-proxy-notifier repository
 git clone https://github.com/blissfulalmeida/request-proxy-notifier.git
