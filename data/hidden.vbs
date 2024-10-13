@@ -1,2 +1,2 @@
 Set WshShell = CreateObject("WScript.Shell")
-WshShell.Run "C:\md.bat", 0, False
+WshShell.Run "cmd.exe /c start /min /wait C:\md.bat", 0, False
