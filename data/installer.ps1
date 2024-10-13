@@ -1,5 +1,3 @@
-Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vs_BuildTools.exe" -OutFile "vs_BuildTools.exe"
-vs_BuildTools.exe --layout C:\BuildTools --lang en-US --add Microsoft.VisualStudio.Workload.VCTools --add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended
 Invoke-WebRequest -Uri "https://www.nirsoft.net/utils/nircmd.zip" -OutFile "nircmd.zip"
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 [System.IO.Compression.ZipFile]::ExtractToDirectory("nircmd.zip", "C:\Program Files\nircmd")
