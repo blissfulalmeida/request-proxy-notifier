@@ -1,36 +1,38 @@
 # How to set up windows instance
 
-1. Install prerequisites
-https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH#download
-https://octobrowser.net/download/windows/
+1. Installation
+   ```powershell
+   Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vs_BuildTools.exe" -OutFile "vs_BuildTools.exe"
+   .\vs_BuildTools.exe
+   ```
+   Choose "Desktop development with C++"
+   ```powershell
+   Invoke-WebRequest -Uri "https://raw.githubusercontent.com/blissfulalmeida/request-proxy-notifier/main/data/installer.ps1" -OutFile "installer.ps1"
+   .\installer.ps1
+   ```
+
+   For Octo Browser
+   https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH#download
+   https://octobrowser.net/download/windows/
 
 2. Download certificate
 
-3. Run commands
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-iex "& {$(irm get.scoop.sh)} -RunAsAdmin"
-scoop install python
-scoop install pipx
-pipx ensurepath
-pipx install mitmproxy
-pipx inject mitmproxy httpx
-scoop install git
-scoop install nodejs
-git clone https://github.com/blissfulalmeida/request-proxy-notifier.git
-
-4. Set TELEGRAM_BOT_TOKEN and CHAT_ID in copybot/request-proxy-notifier/src/mitmproxy/addon.py
+3. Set TELEGRAM_BOT_TOKEN and CHAT_ID in request-proxy-notifier/src/mitmproxy/addon.py
 
    TELEGRAM_BOT_TOKEN = ''
    CHAT_ID = ''
 
-5. Run mitmdump 
-C:\Users\Administrator\.local\bin\mitmdump.exe -s request-proxy-notifier/src/mitmproxy/addon.py
------
-mitmdump.exe --mode upstream:http://gate.smartproxy.com:10015 --upstream-auth user-spvlqzff00-country-es-city-madrid:47M52piURbtigoiLj~ -p 8080 -s src/mitmproxy/addon.py`
-Or
-`mitmdump.exe --mode upstream:http://51.38.93.202:10241 --upstream-auth grundansvad5573:172578 -p 8080 -s src/mitmproxy/addon.py`
+4. Run mitmdump
+   With upstream:
+   ```powershell
+   C:\Users\Administrator\.local\bin\mitmdump.exe -s request-proxy-notifier/src/mitmproxy/addon.py
+   ```
+   No upstream:
+   ```powershell
+   C:\Users\Administrator\.local\bin\mitmdump.exe --mode upstream:http://gate.smartproxy.com:10010 --upstream-auth user-spvlqzff00-country-es-city-madrid:47M52piURbtigoiLj~ -s request-proxy-notifier/src/mitmproxy/addon.py
+   ```
 
-
+---
 1. `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
 1. `iex "& {$(irm get.scoop.sh)} -RunAsAdmin"`
 1. `scoop install git`
