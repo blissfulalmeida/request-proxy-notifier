@@ -13,15 +13,15 @@ class BetPlacementNotifier:
     TELEGRAM_BOT_TOKEN = ''
     CHAT_ID = ''
 
-    SCREENSHOT_COUNT = 3
-    SCREENSHOT_DELAY = 1
+    SCREENSHOT_COUNT = 4
+    SCREENSHOT_DELAY = 0.5
 
     def __init__(self):
         self.num = 0
 
     async def response(self, flow):
-        # if flow.request.host == "httpbin.org" and flow.request.path == "/ip" and flow.request.method == "GET":
-        if 'httpbin' in flow.request.host and flow.request.method == "POST":
+        # if 'httpbin' in flow.request.host and flow.request.method == "POST":
+        if 'bet365' in flow.request.host and 'placebet' in flow.request.path and flow.request.method == "POST":
             asyncio.create_task(self.send_screenshots())
 
     async def send_screenshots(self):
@@ -33,33 +33,17 @@ class BetPlacementNotifier:
             await self.send_photo_to_telegram(self.TELEGRAM_BOT_TOKEN, self.CHAT_ID,  output_file, tmp_batch_uuid)
             await self.remove_file(output_file)
 
-
+            await asyncio.sleep(self.SCREENSHOT_DELAY)
 
         # ***** Utils *****
     async def take_screenshot(self, index):
         # Generate a timestamped filename
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        nircmd_path = f"C:\\Users\\Administrator\\Downloads\\nircmd-x64\\nircmd.exe"
         output_file = f"C:\\screenshot_{timestamp}_{index}.png"
 
-        # PowerShell command to take a screenshot
-        powershell_command = f"""
-        param (
-            [string]$outputFile = "{output_file}"
-        )
-
-        Add-Type -AssemblyName System.Windows.Forms
-        $width = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Width
-        $height = [System.Windows.Forms.Screen]::PrimaryScreen.Bounds.Height
-        $bmp = New-Object Drawing.Bitmap($width, $height)
-        $g = [Drawing.Graphics]::FromImage($bmp)
-        $g.CopyFromScreen(0, 0, 0, 0, $bmp.Size)
-        $g.Dispose()
-        $bmp.Save($outputFile)
-        $bmp.Dispose()
-        """
-
-        # Run the PowerShell command to take the screenshot
-        subprocess.run(["powershell", "-Command", powershell_command])
+        subprocess.run([nircmd_path, 'savescreenshot', output_file], check=True)
+        print(f"Screenshot saved to {output_file}")
         logging.info(f"Screenshot saved at: {output_file}")
 
         return output_file
