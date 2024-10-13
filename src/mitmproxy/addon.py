@@ -39,7 +39,7 @@ class BetPlacementNotifier:
     async def take_screenshot(self, index):
         # Generate a timestamped filename
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        nircmd_path = f"C:\\Users\\Administrator\\Downloads\\nircmd-x64\\nircmd.exe"
+        nircmd_path = f"C:\\Program Files\\nircmd\\nircmd.exe"
         output_file = f"C:\\screenshot_{timestamp}_{index}.png"
 
         subprocess.run([nircmd_path, 'savescreenshot', output_file], check=True)
