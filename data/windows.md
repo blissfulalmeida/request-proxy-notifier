@@ -10,19 +10,19 @@
    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/blissfulalmeida/request-proxy-notifier/main/data/installer.ps1" -OutFile "installer.ps1"
    .\installer.ps1
    ```
+   For Octo Browser<br>
+   - https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH#download
+   - https://octobrowser.net/download/windows/
+   Download certificate
 
-   For Octo Browser
-   https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH#download
-   https://octobrowser.net/download/windows/
+2. Set TELEGRAM_BOT_TOKEN and CHAT_ID in ***request-proxy-notifier/src/mitmproxy/addon.py***
 
-2. Download certificate
-
-3. Set TELEGRAM_BOT_TOKEN and CHAT_ID in request-proxy-notifier/src/mitmproxy/addon.py
-
+   ```
    TELEGRAM_BOT_TOKEN = ''
    CHAT_ID = ''
+   ```
 
-4. Run mitmdump
+3. Run mitmdump
    With upstream:
    ```powershell
    C:\Users\Administrator\.local\bin\mitmdump.exe -s request-proxy-notifier/src/mitmproxy/addon.py
