@@ -22,7 +22,7 @@
    CHAT_ID = ''
    ```
 
-3. Run mitmdump in silent mode
+3. Run mitmdump in silent mode<br>
    Without upstream:
    ```powershell
    .\Quiet.exe C:\Users\Administrator\.local\bin\mitmdump.exe -s request-proxy-notifier/src/mitmproxy/addon.py
