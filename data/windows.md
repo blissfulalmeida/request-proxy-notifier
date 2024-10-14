@@ -22,14 +22,18 @@
    CHAT_ID = ''
    ```
 
-3. Run mitmdump
+3. Run mitmdump in silent mode
    With upstream:
    ```powershell
-   C:\Users\Administrator\.local\bin\mitmdump.exe -s request-proxy-notifier/src/mitmproxy/addon.py
+   .\Quiet.exe C:\Users\Administrator\.local\bin\mitmdump.exe -s request-proxy-notifier/src/mitmproxy/addon.py
    ```
    No upstream:
    ```powershell
-   C:\Users\Administrator\.local\bin\mitmdump.exe --mode upstream:http://gate.smartproxy.com:10010 --upstream-auth user-spvlqzff00-country-es-city-madrid:47M52piURbtigoiLj~ -s request-proxy-notifier/src/mitmproxy/addon.py
+   .\Quiet.exe C:\Users\Administrator\.local\bin\mitmdump.exe --mode upstream:http://gate.smartproxy.com:10010 --upstream-auth user-spvlqzff00-country-es-city-madrid:47M52piURbtigoiLj~ -s request-proxy-notifier/src/mitmproxy/addon.py
+   ```
+   Stop:
+   ```powershell
+   Stop-Process -Name mitmdump
    ```
 
 ---
