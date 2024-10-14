@@ -29,7 +29,7 @@
    ```
    With upstream:
    ```powershell
-   .\Quiet.exe C:\Users\Administrator\.local\bin\mitmdump.exe --mode upstream:http://gate.smartproxy.com:10010 --upstream-auth user-spvlqzff00-country-es-city-madrid:47M52piURbtigoiLj~ -s request-proxy-notifier/src/mitmproxy/addon.py
+   .\Quiet.exe C:\Users\Administrator\.local\bin\mitmdump.exe --mode upstream:http://gate.smartproxy.com:10010 --upstream-auth user-spvlqzff00-country-es-city-madrid:47M52piURbtigoiLj~ --set proxyauth="jhfw6764:8623jbxw7k9emomsu" -p 4152 -s request-proxy-notifier/src/mitmproxy/addon.py
    ```
    Stop:
    ```powershell
@@ -83,6 +83,3 @@
 9. Open VSCode and open radio-shop from C:\\Users\Administrator\projects\radio-shop
 10. `npm install`
 11. `npx cross-env NODE_ENV=PROFILE_NAME node .\src\index.js`
-
-https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH#download
-https://octobrowser.net/download/windows/
