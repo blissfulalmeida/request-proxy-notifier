@@ -64,8 +64,12 @@
    #	::1            localhost
    ```
    We need to modify and uncomment one of the end lines:
-   ```dockerfile
+   ```
       127.0.0.1       <new_hostname>
+   ```
+   Test it
+   ```powershell
+   ping <new_hostname>
    ```
 ---
 1. `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
