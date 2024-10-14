@@ -13,7 +13,7 @@
    For Octo Browser<br>
    - https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH#download
    - https://octobrowser.net/download/windows/
-   Download certificate
+   - Download certificate
 
 2. Set TELEGRAM_BOT_TOKEN and CHAT_ID in ***request-proxy-notifier/src/mitmproxy/addon.py***
 
@@ -34,16 +34,16 @@
 
 ---
 1. `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser`
-1. `iex "& {$(irm get.scoop.sh)} -RunAsAdmin"`
-1. `scoop install git`
-1. `scoop install nodejs`
-1. `mkdir projects`
-1. `cd projects`
-1. `git clone https://github.com/blissfulalmeida/radio-shop.git`
-1. Install VSCode from browser
-1. Open VSCode and open radio-shop from C:\\Users\Administrator\projects\radio-shop
-1. `npm install`
-1. `npx cross-env NODE_ENV=PROFILE_NAME node .\src\index.js`
+2. `iex "& {$(irm get.scoop.sh)} -RunAsAdmin"`
+3. `scoop install git`
+4. `scoop install nodejs`
+5. `mkdir projects`
+6. `cd projects`
+7. `git clone https://github.com/blissfulalmeida/radio-shop.git`
+8. Install VSCode from browser
+9. Open VSCode and open radio-shop from C:\\Users\Administrator\projects\radio-shop
+10. `npm install`
+11. `npx cross-env NODE_ENV=PROFILE_NAME node .\src\index.js`
 
 https://developer.microsoft.com/en-us/microsoft-edge/webview2/?form=MA13LH#download
 https://octobrowser.net/download/windows/
