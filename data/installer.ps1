@@ -8,6 +8,7 @@ scoop install pipx
 pipx ensurepath
 pipx install mitmproxy
 pipx inject mitmproxy httpx
+pipx inject mitmproxy requests
 scoop install git
 git clone https://github.com/blissfulalmeida/request-proxy-notifier.git
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/blissfulalmeida/request-proxy-notifier/main/data/Quiet.exe" -OutFile "Quiet.exe"

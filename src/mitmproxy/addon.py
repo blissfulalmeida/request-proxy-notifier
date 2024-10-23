@@ -1,17 +1,21 @@
 import subprocess
 import datetime
+import requests
 import logging
 import asyncio
 import httpx
-import time
 import uuid
+import json
 import os
 
 class BetPlacementNotifier:
 
     # Constants for Telegram Bot (for now, you can keep them as placeholders)
-    TELEGRAM_BOT_TOKEN = ''
-    CHAT_ID = ''
+    TELEGRAM_BOT_TOKEN = '2015393664:AAEnOcrdGeFY0k8gR7HGWgKrDJR3PsaUC7k'
+    CHAT_ID = '-4548554255'
+
+    PUSHOVER_TOKEN = 'a9a6ez9n9w5c2o2b7f8qvhseqmyscw'
+    PUSHOVER_USER = 'udzz53bo13vmrehmt6hdkujup5nzdy'
 
     SCREENSHOT_COUNT = 4
     SCREENSHOT_DELAY = 0.5
@@ -22,6 +26,7 @@ class BetPlacementNotifier:
     async def response(self, flow):
         # if 'httpbin' in flow.request.host and flow.request.method == "POST":
         if 'bet365' in flow.request.host and 'placebet' in flow.request.path and flow.request.method == "POST":
+            await self.send_pushover_message()
             asyncio.create_task(self.send_screenshots())
 
     async def send_screenshots(self):
@@ -76,5 +81,36 @@ class BetPlacementNotifier:
                 os.remove(file_path)
         except Exception as e:
             logging.error(f"Error removing file {file_path}: {e}")
+
+    async def send_pushover_message(self):
+        url = 'https://api.pushover.net/1/messages.json'
+
+        # Data payload
+        data = {
+            'token': self.PUSHOVER_TOKEN,
+            'user': self.PUSHOVER_USER,
+            'message': 'Trigger!',
+            'device': 'clap',
+            'sound': 'Bigfoot',
+            'priority': 2,
+            'retry': 30,
+            'expire': 360
+        }
+
+        # Headers
+        headers = {
+            'Content-Type': 'application/json',
+        }
+
+        # Sending POST request
+        response = requests.post(url, headers=headers, data=json.dumps(data))
+
+        # Check if the request was successful
+        if response.status_code == 200:
+            print("Notification sent successfully!")
+        else:
+            print(f"Failed to send notification. Status code: {response.status_code}")
+            print(f"Response: {response.text}")
+
 
 addons = [BetPlacementNotifier()]
