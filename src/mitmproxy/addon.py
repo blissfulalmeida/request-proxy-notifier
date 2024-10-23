@@ -11,11 +11,11 @@ import os
 class BetPlacementNotifier:
 
     # Constants for Telegram Bot (for now, you can keep them as placeholders)
-    TELEGRAM_BOT_TOKEN = '2015393664:AAEnOcrdGeFY0k8gR7HGWgKrDJR3PsaUC7k'
-    CHAT_ID = '-4548554255'
+    TELEGRAM_BOT_TOKEN = ''
+    CHAT_ID = ''
 
-    PUSHOVER_TOKEN = 'a9a6ez9n9w5c2o2b7f8qvhseqmyscw'
-    PUSHOVER_USER = 'udzz53bo13vmrehmt6hdkujup5nzdy'
+    PUSHOVER_TOKEN = ''
+    PUSHOVER_USER = ''
 
     SCREENSHOT_COUNT = 4
     SCREENSHOT_DELAY = 0.5
