@@ -47,7 +47,7 @@ class BetPlacementNotifier:
         nircmd_path = f"C:\\Program Files\\nircmd\\nircmd.exe"
         output_file = f"C:\\screenshot_{timestamp}_{index}.png"
 
-        subprocess.run([nircmd_path, 'savescreenshot', output_file], check=True)
+        subprocess.run([nircmd_path, 'savescreenshotwin', output_file], check=True)
         print(f"Screenshot saved to {output_file}")
         logging.info(f"Screenshot saved at: {output_file}")
 
